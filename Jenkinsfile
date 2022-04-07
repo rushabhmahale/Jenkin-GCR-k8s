@@ -1,44 +1,39 @@
-pipeline {
+pipeline{
 
-  agent any
+	agent any
 
-  environment {
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+	environment {
+		DOCKERHUB_CREDENTIALS=credentials('dockerhub-cred-raja')
+	}
 
-    stages {
-      stage('Initialize') {
+	stages {
 
-        def dockerHome = tool 'myDocker'
+		stage('Build') {
 
-        env.PATH = "${dockerHome}/bin:${env.PATH}"
-      }
+			steps {
+				sh 'docker build -t bharathirajatut/nodeapp:latest .'
+			}
+		}
 
-      stage('Build') {
+		stage('Login') {
 
-        steps {
-          sh 'docker build -t omkarguj30/nginx:latest .'
-        }
-      }
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
 
-      stage('Login') {
+		stage('Push') {
 
-        steps {
-          sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-        }
-      }
+			steps {
+				sh 'docker push bharathirajatut/nodeapp:latest'
+			}
+		}
+	}
 
-      stage('Push') {
+	post {
+		always {
+			sh 'docker logout'
+		}
+	}
 
-        steps {
-          sh 'docker push omkarguj30/nginx:latest'
-        }
-      }
-    }
-
-    post {
-      always {
-        sh 'docker logout'
-      }
-    }
-
-  }
+}
