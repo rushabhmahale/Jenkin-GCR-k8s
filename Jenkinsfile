@@ -1,45 +1,44 @@
-pipeline{
+pipeline {
 
-	agent any
+  agent any
 
-	environment {
-		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
- 		
-    	
-	stages {
-		stage('Initialize'){
-			
-        		def dockerHome = tool 'myDocker'
-       			
-			env.PATH = "${dockerHome}/bin:${env.PATH}"
- 		   }
-		
-		stage('Build') {
+  environment {
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
 
-			steps {
-				sh 'docker build -t omkarguj30/nginx:latest .'
-			}
-		}
+    stages {
+      stage('Initialize') {
 
-		stage('Login') {
+        def dockerHome = tool 'myDocker'
 
-			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-			}
-		}
+        env.PATH = "${dockerHome}/bin:${env.PATH}"
+      }
 
-		stage('Push') {
+      stage('Build') {
 
-			steps {
-				sh 'docker push omkarguj30/nginx:latest'
-			}
-		}
-	}
+        steps {
+          sh 'docker build -t omkarguj30/nginx:latest .'
+        }
+      }
 
-	post {
-		always {
-			sh 'docker logout'
-		}
-	}
+      stage('Login') {
 
-}
+        steps {
+          sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+        }
+      }
+
+      stage('Push') {
+
+        steps {
+          sh 'docker push omkarguj30/nginx:latest'
+        }
+      }
+    }
+
+    post {
+      always {
+        sh 'docker logout'
+      }
+    }
+
+  }
