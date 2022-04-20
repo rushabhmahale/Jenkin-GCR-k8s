@@ -10,10 +10,10 @@ spec:
   template:
     metadata:
       labels:
-        app: nginx
+        app: apache
     spec:
       containers:
-      - name: nginx
+      - name: apache
         image: sandip525/apacheweb:latest
         ports:
         - containerPort: 5000
