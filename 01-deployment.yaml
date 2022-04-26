@@ -15,6 +15,7 @@ spec:
       containers:
       - name: apache-web
         image: "gcr.io/searce-playground-v1/rushabhapache:latest"
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
 ---
