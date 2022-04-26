@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: apache-web
-        image: "gcr.io/searce-playground-v1/rushabhapache"
+        image: "gcr.io/searce-playground-v1/rushabhapache:latest"
         ports:
         - containerPort: 80
 ---
