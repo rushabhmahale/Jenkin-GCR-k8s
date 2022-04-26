@@ -10,7 +10,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /v1
+      - path: /*
         pathType: ImplementationSpecific
         backend:
           service:
