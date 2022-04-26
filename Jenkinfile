@@ -1,0 +1,22 @@
+pipeline {
+     agent any
+     environment {
+        PROJECT_ID = 'searce-playground-v1'
+        CLUSTER_NAME = 'rushabh-jenkin-cluster'
+        LOCATION = 'asia-south1-c'
+        CREDENTIALS_ID = 'GKE'
+    }
+    stages {
+        stage('Copy Artifact') {
+            steps {
+                copyArtifacts filter: '**', fingerprintArtifacts: true, projectName: 'apache-gke-pipeline', selector: specific('$build_number')
+        }
+    }
+    stage('Deploy to GKE') {
+            steps{
+               // sh "sed -i 's/latest/${env.BUILD_ID}/g' 01-deployment.yaml"
+                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: '01-deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
+            }
+	    }
+     }
+}
