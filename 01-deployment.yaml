@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache-web
+spec:
+  selector:
+    matchLabels:
+      version: one
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        version: one
+    spec:
+      containers:
+      - name: apache-web
+        image: "gcr.io/searce-playground-v1/rushabhapache"
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apache-web-service
+spec:
+  type: NodePort
+  selector:
+    version: one
+  ports:
+  - port: 80
+    targetPort: 80
