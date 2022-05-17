@@ -1,8 +1,8 @@
 pipeline {
      agent any
      environment {
-        PROJECT_ID = 'searce-playground-v1'
-        CLUSTER_NAME = 'rushabh-jenkin-cluster'
+        PROJECT_ID = '<project_id>'
+        CLUSTER_NAME = '<cluster_name>'
         LOCATION = 'asia-south1-c'
         CREDENTIALS_ID = 'GKE'
     }
