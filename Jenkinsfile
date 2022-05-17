@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        PROJECT_ID = 'searce-playground-v1'
-        CLUSTER_NAME = 'rushabh-jenkin-cluster'
+        PROJECT_ID = '<Project_id>'
+        CLUSTER_NAME = '<Cluster_name>'
         LOCATION = 'asia-south1-c'
         CREDENTIALS_ID = 'GKE'
     }
@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                       Img = docker.build(
-                          "gcr.io/searce-playground-v1/rushabhapache:${env.BUILD_ID}",
+                          "<gcr img_name>:${env.BUILD_ID}",
                           "-f Dockerfile ."
                           )
                 }
@@ -26,7 +26,7 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry([credentialsId: "gcr:GCR", url: "https://gcr.io"]) {
-                      sh "docker push gcr.io/searce-playground-v1/rushabhapache:${env.BUILD_ID}"
+                      sh "docker push <gcr img>:${env.BUILD_ID}"
                     }
                 }
             }
