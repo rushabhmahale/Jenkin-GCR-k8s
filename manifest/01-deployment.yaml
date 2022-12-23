@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: apache-web
-        image: "sandip525/webapp:latest"
+        image: "sandip525/sidapp:latest"
         imagePullPolicy: Always
         ports:
         - containerPort: 80
