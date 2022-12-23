@@ -24,7 +24,7 @@ kind: Service
 metadata:
   name: apache-web-service
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     version: one
   ports:
