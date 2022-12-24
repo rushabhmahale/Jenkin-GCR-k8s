@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: apache-web
-        image: "sandip525/sidapp:latest"
+        image: "<gcr img>"
         imagePullPolicy: Always
         ports:
         - containerPort: 80
